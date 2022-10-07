@@ -1,2 +1,7 @@
+.idea/
+*.iml
+*.iws
+log/
+target/
 # Project exclude paths
 /geek-http-server/target/
