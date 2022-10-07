@@ -1,10 +1,13 @@
 package ru.geekbrains;
 
-import ru.geekbrains.domain.HttpRequest;
-
 import java.util.List;
 
 public interface RequestParser {
 
-    HttpRequest parse(List<String> rawRequest);
+     default String pars(List<String> Parsing) {
+        String [] parts = Parsing.get(0).split(" ");
+        return parts[1];
+    }
+
+
 }

@@ -1,5 +1,8 @@
 package ru.geekbrains.domain;
 
+import ru.geekbrains.SocketService;
+
+import java.util.List;
 import java.util.Map;
 
 public class HttpRequest {
@@ -8,49 +11,29 @@ public class HttpRequest {
 
     private String path;
 
-    private Map<String, String> headers;
+    private List<String> headers;
+
+    private SocketService socketService;
+
 
     private String body;
 
     // TODO constructors, getters, setters
 
 
-    public HttpRequest(String method, String path, Map<String, String> headers, String body) {
+    public HttpRequest(String method, String path, List<String> headers, String body) {
         this.method = method;
         this.path = path;
-        this.headers = headers;
+        this.headers = (List<String>) headers;
         this.body = body;
     }
 
-    public String getMethod() {
-        return method;
+    public HttpRequest(SocketService socketService) {
+        this.socketService = socketService;
     }
 
-    public String getPath() {
-        return path;
-    }
 
-    public Map<String, String> getHeaders() {
-        return headers;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
+    public List<String> getHeaders() {
+        return headers = socketService.readRequest();
     }
 }

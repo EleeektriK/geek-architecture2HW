@@ -1,56 +1,46 @@
 package ru.geekbrains;
 
+import ru.geekbrains.domain.HttpRequest;
+import ru.geekbrains.domain.HttpResponse;
 import ru.geekbrains.logger.ConsoleLogger;
 import ru.geekbrains.logger.Logger;
 
-import java.io.*;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class RequestHandler implements Runnable {
-
-    private static final String WWW = "C:/Java/geek-architecture-123/www/index.html";
+public class RequestHandler implements Runnable, RequestParser, ResponseSerializer {
 
     private static final Logger logger = new ConsoleLogger();
 
     private final SocketService socketService;
 
     public RequestHandler(SocketService socketService) {
+
         this.socketService = socketService;
     }
 
     @Override
-    public void run() {
+    public void run(){
+        HttpRequest httpRequest = new HttpRequest(socketService);
+        HttpResponse httpResponse = new HttpResponse(socketService);
 
-        List<String> request = socketService.readRequest();
-
-        // TODO use here implementation of interface RequestParser
-        String[] parts = request.get(0).split(" ");
-
-        Path path = Paths.get(WWW, parts[1]);
+        Path path = Paths.get(HttpResponse.getWWW(), pars(httpRequest.getHeaders()));
         if (!Files.exists(path)) {
-            // TODO use implementation of interface ResponseSerializer
-            socketService.writeResponse(
-                    "HTTP/1.1 404 NOT_FOUND\n" +
-                            "Content-Type: text/html; charset=utf-8\n" +
-                            "\n",
-                   new StringReader("<h1>Файл не найден!</h1>\n")
-            );
-            return;
+            try {
+                httpResponse.getSocketService().writeResponse(httpResponse.getStatusCode(), dontAnswer(path));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         try {
-            // TODO use implementation of interface ResponseSerializer
-            socketService.writeResponse("HTTP/1.1 200 OK\n" +
-                    "Content-Type: text/html; charset=utf-8\n" +
-                    "\n",
-                    Files.newBufferedReader(path));
+            httpResponse.getSocketService().writeResponse(httpResponse.getStatusCode(), answerRequest(path));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         logger.info("Client disconnected!");
     }
 }
