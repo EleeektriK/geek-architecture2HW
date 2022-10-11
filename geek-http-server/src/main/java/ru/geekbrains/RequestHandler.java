@@ -6,6 +6,7 @@ import ru.geekbrains.logger.ConsoleLogger;
 import ru.geekbrains.logger.Logger;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,17 +28,18 @@ public class RequestHandler implements Runnable, RequestParser, ResponseSerializ
         HttpRequest httpRequest = new HttpRequest(socketService);
         HttpResponse httpResponse = new HttpResponse(socketService);
 
+        System.out.println(codeAnswer());
+
         Path path = Paths.get(HttpResponse.getWWW(), pars(httpRequest.getHeaders()));
         if (!Files.exists(path)) {
             try {
-                httpResponse.getSocketService().writeResponse(httpResponse.getStatusCode(), dontAnswer(path));
+                httpResponse.getSocketService().writeResponse(codeError(), dontAnswer(path));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-
         try {
-            httpResponse.getSocketService().writeResponse(httpResponse.getStatusCode(), answerRequest(path));
+            httpResponse.getSocketService().writeResponse(codeAnswer(), answerRequest(path));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
