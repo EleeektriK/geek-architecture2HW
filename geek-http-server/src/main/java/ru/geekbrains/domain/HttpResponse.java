@@ -2,23 +2,17 @@ package ru.geekbrains.domain;
 
 import ru.geekbrains.SocketService;
 
-import java.io.StringReader;
-
 public class HttpResponse {
 
     private SocketService socketService;
     private String statusCode;
+    private static  String WWW = "C:/Java/geek-architecture-123/www/index.html";
+    private String htmlCode;
+    private String status;
+    private String contentType;
+    private String charset;
 
-    private static   String WWW = "C:/Java/geek-architectur2e-123/www/index.html";
-
-    private String file;
-
-    // TODO
-    public HttpResponse( String statusCode, String www, String file) {
-
-        this.statusCode = statusCode;
-        this.WWW = www;
-        this.file = file;
+    private HttpResponse(){
     }
 
     public HttpResponse(SocketService socketService) {
@@ -29,21 +23,67 @@ public class HttpResponse {
         return WWW;
     }
 
-    public String getFile() {
-        return file = ("HTTP/1.1 200 OK\n" +
-                "Content-Type: text/html; charset=utf-8\n" +
-                "\n");
-    }
-
     public SocketService getSocketService() {
-        return socketService = socketService;
+        return socketService;
     }
 
     public String getStatusCode() {
-       return statusCode = ("HTTP/1.1 404 NOT_FOUND\n" +
-                "Content-Type: text/html; charset=utf-8\n" +
-                "\n");
+        return statusCode;
     }
 
+    public String getHtmlCode() {
+        return htmlCode;
+    }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public String getCharset() {
+        return charset;
+    }
+
+    public static class BuilderResponse{
+        private final HttpResponse httpResponse;
+
+        public BuilderResponse(){
+            this.httpResponse = new HttpResponse();
+        }
+
+        public BuilderResponse withHtmlCode(String htmlCode){
+            this.httpResponse.htmlCode = htmlCode;
+            return this;
+        }
+
+        public BuilderResponse withStatusCode(String statusCode){
+            this.httpResponse.statusCode = statusCode;
+            return this;
+        }
+
+        public BuilderResponse withStatus(String status){
+            this.httpResponse.status = status;
+            return this;
+        }
+
+        public BuilderResponse withContentType(String contentType){
+            this.httpResponse.contentType = contentType;
+            return this;
+        }
+
+        public BuilderResponse withCharset(String charset){
+            this.httpResponse.charset = charset;
+            return this;
+        }
+
+        public HttpResponse build(){
+            return this.httpResponse;
+        }
+
+
+
+    }
 }
