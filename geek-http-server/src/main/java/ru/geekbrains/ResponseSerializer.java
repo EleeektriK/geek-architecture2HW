@@ -46,11 +46,6 @@ public interface ResponseSerializer {
 
     }
 
-    default Path answerRequestSecond(String path, List<String> nameSlash) throws IOException{
-      Path path1 = Paths.get(path, String.valueOf(nameSlash));
-        return path1;
-    }
-
     default Reader dontAnswer(Path path1) throws IOException{
         return new StringReader("<h1>Ошибочка вышла</h1>");
     }

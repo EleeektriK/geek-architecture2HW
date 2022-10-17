@@ -1,10 +1,6 @@
 package ru.geekbrains.domain;
 
-import ru.geekbrains.RequestParser;
 import ru.geekbrains.SocketService;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class HttpResponse {
 
