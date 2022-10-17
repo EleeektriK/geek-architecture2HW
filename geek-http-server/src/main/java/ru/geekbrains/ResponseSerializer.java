@@ -2,11 +2,14 @@ package ru.geekbrains;
 
 import ru.geekbrains.domain.HttpResponse;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 
 public interface ResponseSerializer {
