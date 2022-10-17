@@ -1,12 +1,15 @@
 package ru.geekbrains.domain;
 
+import ru.geekbrains.RequestParser;
 import ru.geekbrains.SocketService;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class HttpResponse {
 
     private SocketService socketService;
     private String statusCode;
-    private static  String WWW = "C:/Java/geek-architecture-123/www/index.html";
     private String htmlCode;
     private String status;
     private String contentType;
@@ -17,10 +20,6 @@ public class HttpResponse {
 
     public HttpResponse(SocketService socketService) {
         this.socketService = socketService;
-    }
-
-    public static   String getWWW() {
-        return WWW;
     }
 
     public SocketService getSocketService() {

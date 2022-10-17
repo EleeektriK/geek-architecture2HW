@@ -22,6 +22,10 @@ public class HttpRequest {
         this.socketService = socketService;
     }
 
+    public HttpRequest() {
+
+    }
+
 
     public List<String> getHeaders() {
         return headers = socketService.readRequest();

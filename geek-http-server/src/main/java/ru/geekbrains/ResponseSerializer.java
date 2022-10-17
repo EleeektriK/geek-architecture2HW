@@ -2,11 +2,14 @@ package ru.geekbrains;
 
 import ru.geekbrains.domain.HttpResponse;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 
 public interface ResponseSerializer {
@@ -41,6 +44,11 @@ public interface ResponseSerializer {
 
         return Files.newBufferedReader(paths);
 
+    }
+
+    default Path answerRequestSecond(String path, List<String> nameSlash) throws IOException{
+      Path path1 = Paths.get(path, String.valueOf(nameSlash));
+        return path1;
     }
 
     default Reader dontAnswer(Path path1) throws IOException{
