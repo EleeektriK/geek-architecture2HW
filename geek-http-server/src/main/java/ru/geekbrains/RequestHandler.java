@@ -1,10 +1,12 @@
 package ru.geekbrains;
 
 
+import ru.geekbrains.bridge.WhatTheBridge;
 import ru.geekbrains.domain.HttpRequest;
 import ru.geekbrains.domain.HttpResponse;
 import ru.geekbrains.logger.ConsoleLogger;
 import ru.geekbrains.logger.Logger;
+import ru.geekbrains.memento.MementoWWW;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,10 +28,14 @@ public class RequestHandler implements Runnable, RequestParser, ResponseSerializ
     public void run(){
         HttpRequest httpRequest = new HttpRequest(socketService);
         HttpResponse httpResponse = new HttpResponse(socketService);
+        WhatTheBridge whatTheBridge = new WhatTheBridge();
+        MementoWWW mementoWWW = new MementoWWW();
+
+        whatTheBridge.requestWWW();
 
 
 
-        Path path = Paths.get(parsThread(), pars(httpRequest.getHeaders()));
+        Path path = Paths.get(whatTheBridge.requestWWW(), pars(httpRequest.getHeaders()));
 
 
             if (!Files.exists(path)){
