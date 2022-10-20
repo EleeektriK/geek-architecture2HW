@@ -46,6 +46,7 @@ public interface ResponseSerializer {
 
     }
 
+
     default Reader dontAnswer(Path path1) throws IOException{
         return new StringReader("<h1>Ошибочка вышла</h1>");
     }
